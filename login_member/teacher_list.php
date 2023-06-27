@@ -1,3 +1,16 @@
+<?php
+session_start ();
+session_regenerate_id(true);
+if(isset($_SESSION['login']) == false){
+  print 'ログインされていません';
+  print '<a href="teacher_login.html">ログイン画面へ</a>';
+  exit();
+} else{
+  print $_SESSION['teacher_name'];
+  print 'さんがログイン中<br>';
+}
+ ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,7 +63,7 @@ catch(Exception $e){
 }
  ?>
 <br>
-<a href="teacher_login.html">ログイン画面へ</a><br>
+<a href="teacher_top.php">成績管理トップ画面へ</a><br>
 
 </body>
 </html>
