@@ -7,7 +7,7 @@ if(isset($_SESSION['login']) == false){
   exit();
 } else{
   print $_SESSION['teacher_name'];
-  print 'さんがログイン中<br>';
+  print '先生がログイン中<br>';
 }
  ?>
 
