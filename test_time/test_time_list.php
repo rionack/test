@@ -3,11 +3,11 @@ session_start ();
 session_regenerate_id(true);
 if(isset($_SESSION['login']) == false){
   print 'ログインされていません';
-  print '<a href="../staff_login/staff_login.html">ログイン画面へ</a>';
+  print '<a href="../test_app/teacher_login.html">ログイン画面へ</a>';
   exit();
 } else{
-  print $_SESSION['staff_name'];
-  print 'さんがログイン中<br>';
+  print $_SESSION['teacher_name'];
+  print '先生がログイン中<br>';
 }
  ?>
 
@@ -15,27 +15,27 @@ if(isset($_SESSION['login']) == false){
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ろくまる農園</title>
+<title>成績管理アプリ</title>
 </head>
 <body>
 <?php
   try{
 
-    $dsn = 'mysql:dbname=shop;host=localhost;charset=utf8';
+    $dsn = 'mysql:dbname=test;host=localhost;charset=utf8';
     $user = 'root';
     $password = 'root';
     $dbh = new PDO($dsn, $user, $password);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = 'SELECT code, name, price FROM mst_product WHERE 1';
+    $sql = 'SELECT id, test_date, test_type FROM test_time WHERE 1';
     $stmt = $dbh->prepare($sql);
     $stmt->execute();
 
     $dbh = null;
 
-    print '商品一覧<br><br>';
+    print 'テスト実施日一覧<br><br>';
 
-    print '<form method="post" action="pro_branch.php">';
+    print '<form method="post" action="test_branch.php">';
 
     while(true){
       $rec = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -43,9 +43,9 @@ if(isset($_SESSION['login']) == false){
       if($rec == false){
         break;
       }
-    print '<input type="radio" name="procode" value="'.$rec['code'].'">';
-    print $rec['name'].'--';
-    print $rec['price'].'円';
+    print '<input type="radio" name="testid" value="'.$rec['id'].'">';
+    print $rec['test_date'];
+    print '('.$rec['test_type']. ')';
     print '<br>';
     }
     print '<br>';
@@ -64,7 +64,7 @@ catch(Exception $e){
  ?>
 
 <br>
-<a href="../staff_login/staff_top.php">トップメニューへ</a><br>
+<a href="../login_member/teacher_top.php">トップメニューへ</a><br>
 
 </body>
 </html>

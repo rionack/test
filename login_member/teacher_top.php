@@ -22,7 +22,7 @@ if(isset($_SESSION['login']) == false){
 <br>
 <a href="teacher_list.php">先生管理</a><br>
 <br>
-<a href="../product/pro_list.php">商品管理</a><br>
+<a href="../test_time/test_time_list.php">テスト実施日管理</a><br>
 <br>
 <a href="../order/order_download.php">注文ダウンロード</a><br>
 <br>
