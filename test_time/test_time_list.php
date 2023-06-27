@@ -35,7 +35,7 @@ if(isset($_SESSION['login']) == false){
 
     print 'テスト実施日一覧<br><br>';
 
-    print '<form method="post" action="test_branch.php">';
+    print '<form method="post" action="test_time_branch.php">';
 
     while(true){
       $rec = $stmt->fetch(PDO::FETCH_ASSOC);
