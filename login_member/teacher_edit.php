@@ -6,7 +6,7 @@ if(isset($_SESSION['login']) == false){
   print '<a href="teacher_login.html">ログイン画面へ</a>';
   exit();
 } else{
-  print $_SESSION['staff_name'];
+  print $_SESSION['teacher_name'];
   print '先生がログイン中<br>';
 }
  ?>
@@ -21,21 +21,22 @@ if(isset($_SESSION['login']) == false){
 <?php
 try{
 
-  $staff_code = $_GET['staffcode'];
+  $teacher_code = $_GET['teachercode'];
 
-  $dsn ='mysql:dbname=shop;host=localhost;charset=utf8';
+  $dsn ='mysql:dbname=test;host=localhost;charset=utf8';
   $user = 'root';
   $password = 'root';
   $dbh = new PDO($dsn, $user, $password);
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-  $sql = 'SELECT name FROM mst_staff WHERE code=?';
+  $sql = 'SELECT name, email FROM login_member WHERE id=?';
   $stmt = $dbh->prepare($sql);
-  $data[] = $staff_code;
+  $data[] = $teacher_code;
   $stmt->execute($data);
 
   $rec = $stmt->fetch(PDO::FETCH_ASSOC);
-  $staff_name = $rec['name'];
+  $teacher_name = $rec['name'];
+  $teacher_email = $rec['email'];
 
   $dbh = null;
 }
@@ -45,16 +46,18 @@ catch(Exeption $e){
 }
  ?>
 
-スタッフ修正<br>
+登録されている先生情報の修正<br>
 <br>
-スタッフコード<br>
-<?php print $staff_code; ?>
+先生コード<br>
+<?php print $teacher_code; ?>
 <br>
 <br>
-<form method="post" action="staff_edit_check.php">
-<input type="hidden" name="code" value="<?php print $staff_code; ?>">
-スタッフ名<br>
-<input type="text" name="name" style="width:200px" value="<?php print $staff_name; ?>"><br>
+<form method="post" action="teacher_edit_check.php">
+<input type="hidden" name="code" value="<?php print $teacher_code; ?>">
+先生名<br>
+<input type="text" name="name" style="width:200px" value="<?php print $teacher_name; ?>"><br>
+登録メールアドレス<br>
+<input type="text" name="email" style="width:200px;" value="<?php print $teacher_email; ?>"><br>
 パスワードを入力してください<br>
 <input type="password" name="pass" style="width:100px"><br>
 もう一度パスワードを入力していください<br>
