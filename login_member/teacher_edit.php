@@ -21,7 +21,7 @@ if(isset($_SESSION['login']) == false){
 <?php
 try{
 
-  $teacher_code = $_GET['teachercode'];
+  $teacher_id = $_GET['teachercode'];
 
   $dsn ='mysql:dbname=test;host=localhost;charset=utf8';
   $user = 'root';
@@ -31,7 +31,7 @@ try{
 
   $sql = 'SELECT name, email FROM login_member WHERE id=?';
   $stmt = $dbh->prepare($sql);
-  $data[] = $teacher_code;
+  $data[] = $teacher_id;
   $stmt->execute($data);
 
   $rec = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -48,12 +48,12 @@ catch(Exeption $e){
 
 登録されている先生情報の修正<br>
 <br>
-先生コード<br>
-<?php print $teacher_code; ?>
+先生ID<br>
+<?php print $teacher_id; ?>
 <br>
 <br>
 <form method="post" action="teacher_edit_check.php">
-<input type="hidden" name="code" value="<?php print $teacher_code; ?>">
+<input type="hidden" name="id" value="<?php print $teacher_id; ?>">
 先生名<br>
 <input type="text" name="name" style="width:200px" value="<?php print $teacher_name; ?>"><br>
 登録メールアドレス<br>
