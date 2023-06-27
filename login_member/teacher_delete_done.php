@@ -42,7 +42,7 @@ catch(Exception $e){
  ?>
 削除しました<br>
 <br>
-<a href="teacher_list.php">戻る</a>
+<a href="teacher_auto_logout.php">戻る（自動ログアウトしますので、再ログインをお願いします）</a>
 
 </body>
 </html>
