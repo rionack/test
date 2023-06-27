@@ -3,30 +3,34 @@ session_start ();
 session_regenerate_id(true);
 if(isset($_SESSION['login']) == false){
   print 'ログインされていません';
-  print '<a href="../staff_login/staff_login.html">ログイン画面へ</a>';
+  print '<a href="../login_member/teacher_login.html">ログイン画面へ</a>';
   exit();
 } else{
-  print $_SESSION['staff_name'];
-  print 'さんがログイン中<br>';
+  print $_SESSION['teacher_name'];
+  print '先生がログイン中<br>';
 }
+require_once('../common/common.php'); //commonファイルを呼び出し
+
  ?>
- 
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ろくまる農園</title>
+<title>成績管理アプリ</title>
 </head>
 <body>
-商品を追加<br>
+テスト実施情報を追加<br>
 <br>
-<form method="post" action="pro_add_check.php" enctype="multipart/form-data">
-商品名を入れてください<br>
-<input name="name" type="text" style="width:200px"><br>
-価格を入力してください<br>
-<input name="price" type="text" style="width:100px"><br>
-画像を選んでください<br>
-<input type="file" name="gazou" style="width:400px"><br>
+<form method="post" action="test_time_add_check.php">
+実施日を選んでください<br>
+<?php pulldown_year(); ?>年　<?php pulldown_month(); ?>月 　<?php pulldown_day(); ?>日<br>  <!--functionはそのまま記入 -->
+<br>
+テスト種別を選んでください<br>
+<input name="test_type" type="radio" value="first_mid" checked>前期中間テスト<br>
+<input type="radio" name="test_type" value="first_final">前期期末テスト<br>
+<input type="radio" name="test_type" value="second_mid">後期中間テスト<br>
+<input type="radio" name="test_type" value="second_final">後期期末テスト<br>
 <br>
 <input type="button" onclick="history.back()" value="戻る">
 <input type="submit" value="OK">
