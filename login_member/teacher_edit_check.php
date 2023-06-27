@@ -3,11 +3,11 @@ session_start ();
 session_regenerate_id(true);
 if(isset($_SESSION['login']) == false){
   print 'ログインされていません';
-  print '<a href="../staff_login/staff_login.html">ログイン画面へ</a>';
+  print '<a href="teacher_login.html">ログイン画面へ</a>';
   exit();
 } else{
-  print $_SESSION['staff_name'];
-  print 'さんがログイン中<br>';
+  print $_SESSION['teacher_name'];
+  print '先生がログイン中<br>';
 }
  ?>
 
@@ -15,7 +15,7 @@ if(isset($_SESSION['login']) == false){
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ろくまる農園</title>
+<title>成績管理アプリ</title>
 </head>
 <body>
 <?php
@@ -23,35 +23,43 @@ if(isset($_SESSION['login']) == false){
 require_once('../common/common.php');
 
 $post = sanitize($_POST);
-$staff_code = $post['code'];
-$staff_name = $post['name'];
-$staff_pass = $post['pass'];
-$staff_pass2 = $post['pass2'];
+$teacher_id = $post['id'];
+$teacher_name = $post['name'];
+$teacher_email = $post['email'];
+$teacher_pass = $post['pass'];
+$teacher_pass2 = $post['pass2'];
 
-if($staff_name == ''){
-  print 'スタッフ名が入力されていません<br>';
+if($teacher_name == ''){
+  print '先生名が入力されていません<br>';
 } ELSE{
-  print 'スタッフ名：' . $staff_name .'<br>';
+  print '先生名：' . $teacher_name .'<br>';
 }
 
-if($staff_pass == ''){
+if($teacher_email == ''){
+  print 'メールアドレスが入力されていません<br>';
+} else{
+  print 'メールアドレス：' .$teacher_email. '<br>';
+}
+
+if($teacher_pass == ''){
   print 'パスワードを入力してください<br>';
 }
 
-if($staff_pass2 == ''){
+if($teacher_pass2 == ''){
   print '確認のためパスワードを入力してください<br>';
 }
 
-if($staff_name == '' || $staff_pass == '' || $staff_pass2 == ''){
+if($teacher_name == '' || $teacher_email == '' || $teacher_pass == '' || $teacher_pass2 == ''){
   print '<form>';
   print '<input type="button" onclick="history.back()" value="戻る">';
   print '</form>';
 } ELSE{
-  $staff_pass = md5($staff_pass);
-  print '<form method="post" action="staff_edit_done.php">';
-  print '<input type="hidden" name="code" value="'.$staff_code.'">';
-  print '<input type="hidden" name="name" value="'.$staff_name.'">';
-  print '<input type="hidden" name="pass" value="'.$staff_pass.'">';
+  $teacher_pass = md5($teacher_pass);
+  print '<form method="post" action="teacher_edit_done.php">';
+  print '<input type="hidden" name="id" value="'.$teacher_id.'">';
+  print '<input type="hidden" name="name" value="'.$teacher_name.'">';
+  print '<input type="hidden" name="email" value="'.$teacher_email.'">';
+  print '<input type="hidden" name="pass" value="'.$teacher_pass.'">';
   print '<br>';
   print '<input type="button" onclick="history.back()" value="戻る">';
   print '<input type="submit" value="OK">';
