@@ -3,11 +3,11 @@ session_start ();
 session_regenerate_id(true);
 if(isset($_SESSION['login']) == false){
   print 'ログインされていません';
-  print '<a href="../staff_login/staff_login.html">ログイン画面へ</a>';
+  print '<a href="teacher_login.html">ログイン画面へ</a>';
   exit();
 } else{
-  print $_SESSION['staff_name'];
-  print 'さんがログイン中<br>';
+  print $_SESSION['teacher_name'];
+  print '先生がログイン中<br>';
 }
  ?>
 
@@ -15,27 +15,28 @@ if(isset($_SESSION['login']) == false){
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ろくまる農園</title>
+<title>成績管理アプリ</title>
 </head>
 <body>
 <?php
 try{
 
-  $staff_code = $_GET['staffcode'];
+  $teacher_code = $_GET['teachercode'];
 
-  $dsn ='mysql:dbname=shop;host=localhost;charset=utf8';
+  $dsn ='mysql:dbname=test;host=localhost;charset=utf8';
   $user = 'root';
   $password = 'root';
   $dbh = new PDO($dsn, $user, $password);
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-  $sql = 'SELECT name FROM mst_staff WHERE code=?';
+  $sql = 'SELECT name, email FROM login_member WHERE id=?';
   $stmt = $dbh->prepare($sql);
-  $data[] = $staff_code;
+  $data[] = $teacher_code;
   $stmt->execute($data);
 
   $rec = $stmt->fetch(PDO::FETCH_ASSOC);
-  $staff_name = $rec['name'];
+  $teacher_name = $rec['name'];
+  $teacher_email = $rec['email'];
 
   $dbh = null;
 }
@@ -45,13 +46,19 @@ catch(Exeption $e){
 }
  ?>
 
-スタッフ情報参照<br>
+登録されている先生の情報<br>
 <br>
-スタッフコード<br>
-<?php print $staff_code; ?>
+先生ID<br>
+<?php print $teacher_code; ?>
 <br>
-スタッフ名<br>
-<?php print $staff_name; ?>
+<br>
+先生名<br>
+<?php print $teacher_name; ?>
+<br>
+<br>
+登録済みメールアドレス<br>
+<?php print $teacher_email; ?>
+<br>
 <br>
 <form>
 <input type="button" onclick="history.back()" value="戻る">
