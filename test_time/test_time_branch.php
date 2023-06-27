@@ -3,45 +3,45 @@ session_start ();
 session_regenerate_id(true);
 if(isset($_SESSION['login']) == false){
   print 'ログインされていません';
-  print '<a href="../staff_login/staff_login.html">ログイン画面へ</a>';
+  print '<a href="../login_member/teacher_login.html">ログイン画面へ</a>';
   exit();
 }
 
 if(isset($_POST['disp']) == true){
-    if(isset($_POST['procode']) == false){
-      header('Location:pro_ng.php');
+    if(isset($_POST['testid']) == false){
+      header('Location:test_time_ng.php');
       exit();
     }
 
-    $pro_code = $_POST['procode'];
-    header('Location:pro_disp.php?procode='.$pro_code);
+    $test_id = $_POST['testid'];
+    header('Location:test_time_disp.php?testid='.$test_id);
     exit();
 }
 
 if(isset($_POST['add']) == true){
-  header('Location:pro_add.php');
+  header('Location:test_time_add.php');
   exit();
 }
 
 if(isset($_POST['edit']) == true){
 
-    if(isset($_POST['procode']) == false){
-      header('Location:pro_ng.php');
+    if(isset($_POST['testid']) == false){
+      header('Location:test_time_ng.php');
       exit();
     }
-  $pro_code = $_POST['procode'];
-  header('Location:pro_edit.php?procode='.$pro_code);
+  $test_id = $_POST['testid'];
+  header('Location:test_time_edit.php?testid='.$test_id);
   exit();
 }
 
 if(isset($_POST['delete']) == true){
 
-    if(isset($_POST['procode']) == false){
-      header('Location:pro_ng.php');
+    if(isset($_POST['testid']) == false){
+      header('Location:test_time_ng.php');
       exit();
     }
-  $pro_code = $_POST['procode'];
-  header('Location:pro_delete.php?procode='.$pro_code);
+  $test_id = $_POST['testid'];
+  header('Location:test_time_delete.php?testid='.$test_id);
   exit();
 }
 
