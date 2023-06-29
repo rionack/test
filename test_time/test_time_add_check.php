@@ -60,7 +60,7 @@ else
 	print '上に表示されているテスト情報を登録します。<br />';
 	print '<form method="post" action="test_time_add_done.php">';
 	print '<input type="hidden" name="test_time" value="'.$test_time.'">';
-	print '<input type="hidden" name="test_time_type" value="'.$test_type.'">';
+	print '<input type="hidden" name="test_type" value="'.$test_type.'">';
 	print '<br />';
 	print '<input type="button" onclick="history.back()" value="戻る">';
 	print '<input type="submit" value="ＯＫ">';
