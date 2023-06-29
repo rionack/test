@@ -27,10 +27,10 @@ require_once('../common/common.php'); //commonファイルを呼び出し
 <?php pulldown_year(); ?>年　<?php pulldown_month(); ?>月 　<?php pulldown_day(); ?>日<br>  <!--functionはそのまま記入 -->
 <br>
 テスト種別を選んでください<br>
-<input name="test_type" type="radio" value="first_mid" checked>前期中間テスト<br>
-<input type="radio" name="test_type" value="first_final">前期期末テスト<br>
-<input type="radio" name="test_type" value="second_mid">後期中間テスト<br>
-<input type="radio" name="test_type" value="second_final">後期期末テスト<br>
+<input name="test_type" type="radio" value="前期中間テスト" checked>前期中間テスト<br>
+<input type="radio" name="test_type" value="前期期末テスト">前期期末テスト<br>
+<input type="radio" name="test_type" value="後期中間テスト">後期中間テスト<br>
+<input type="radio" name="test_type" value="後期期末テスト">後期期末テスト<br>
 <br>
 <input type="button" onclick="history.back()" value="戻る">
 <input type="submit" value="OK">

@@ -26,41 +26,30 @@ $post = sanitize($_POST); //textを利用していないため不要かも？
 $test_time_year = $post['year'];
 $test_time_month = $post['month'];
 $test_time_day =  $post['day'];
-$test_time_type = $post['test_type'];
+$test_type = $post['test_type'];
+$test_time = $test_time_year. '-'.$test_time_month. '-'.$test_time_day;
 
-if($pro_name=='')
+if($test_time_year == '' || $test_time_month == '' || $test_time_day == '')
 {
-	print '商品名が入力されていません。<br />';
+	print 'テスト実施日が正しく入力されていません。<br>';
 }
 else
 {
-	print '商品名:';
-	print $pro_name;
+	print 'テスト実施日:';
+	print $test_time_year. '年'. $test_time_month. '月'. $test_time_day. '日';
 	print '<br />';
 }
 
-if(preg_match('/\A[0-9]+\z/',$pro_price)==0)
-{
-	print '価格をきちんと入力してください。<br />';
-}
-else
-{
-	print '価格:';
-	print $pro_price;
-	print '円<br />';
+if($test_type == ''){
+  print 'テストの種別を選択してください。<br>';
+} else{
+  print 'テスト種別：';
+  print $test_type;
+  print '<br>';
 }
 
-if($pro_gazou['size'] > 0){
-  if($pro_gazou['size'] > 1000000){
-    print '画像サイズが大きすぎます';
-  } ELSE{
-    move_uploaded_file($pro_gazou['tmp_name'],'./gazou/'.$pro_gazou['name']);
-    print '<img src="./gazou/'.$pro_gazou['name'].'">';
-    print '<br>';
-  }
-}
 
-if($pro_name=='' || preg_match('/\A[0-9]+\z/',$pro_price)==0 || $pro_gazou['size'] > 1000000)
+if($test_time_year == '' || $test_time_month == '' || $test_time_day == '' || $test_type == '' )
 {
 	print '<form>';
 	print '<input type="button" onclick="history.back()" value="戻る">';
@@ -68,11 +57,10 @@ if($pro_name=='' || preg_match('/\A[0-9]+\z/',$pro_price)==0 || $pro_gazou['size
 }
 else
 {
-	print '上記の商品を追加します。<br />';
-	print '<form method="post" action="pro_add_done.php">';
-	print '<input type="hidden" name="name" value="'.$pro_name.'">';
-	print '<input type="hidden" name="price" value="'.$pro_price.'">';
-  print '<input type="hidden" name="gazou_name" value="'.$pro_gazou['name'].'">';
+	print '上に表示されているテスト情報を登録します。<br />';
+	print '<form method="post" action="test_time_add_done.php">';
+	print '<input type="hidden" name="test_time" value="'.$test_time.'">';
+	print '<input type="hidden" name="test_time_type" value="'.$test_type.'">';
 	print '<br />';
 	print '<input type="button" onclick="history.back()" value="戻る">';
 	print '<input type="submit" value="ＯＫ">';
