@@ -27,7 +27,7 @@ if(isset($_SESSION['login']) == false){
     $dbh = new PDO($dsn, $user, $password);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = 'SELECT id, test_date, test_type FROM test_time WHERE 1';
+    $sql = 'SELECT id, test_date, test_type FROM test_time WHERE 1 ORDER BY test_date DESC';
     $stmt = $dbh->prepare($sql);
     $stmt->execute();
 
