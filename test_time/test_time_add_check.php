@@ -3,11 +3,11 @@ session_start ();
 session_regenerate_id(true);
 if(isset($_SESSION['login']) == false){
   print 'ログインされていません';
-  print '<a href="../staff_login/staff_login.html">ログイン画面へ</a>';
+  print '<a href="../login_member/teacher_login.html">ログイン画面へ</a>';
   exit();
 } else{
-  print $_SESSION['staff_name'];
-  print 'さんがログイン中<br>';
+  print $_SESSION['teacher_name'];
+  print '先生がログイン中<br>';
 }
  ?>
 
@@ -15,17 +15,18 @@ if(isset($_SESSION['login']) == false){
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ろくまる農園</title>
+<title>成績管理アプリ</title>
 </head>
 <body>
 
 <?php
 require_once('../common/common.php');
 
-$post = sanitize($_POST);
-$pro_name = $post['name'];
-$pro_price = $post['price'];
-$pro_gazou = $_FILES['gazou'];
+$post = sanitize($_POST); //textを利用していないため不要かも？
+$test_time_year = $post['year'];
+$test_time_month = $post['month'];
+$test_time_day =  $post['day'];
+$test_time_type = $post['test_type'];
 
 if($pro_name=='')
 {
