@@ -15,7 +15,7 @@ if(isset($_SESSION['login']) == false){
 <html>
 <head>
 <meta charset="UTF-8">
-<title>成績管理プリ</title>
+<title>成績管理アプリ</title>
 </head>
 <body>
 <?php
@@ -23,45 +23,35 @@ if(isset($_SESSION['login']) == false){
 require_once('../common/common.php');
 
 $post = sanitize($_POST);
-$pro_code = $post['code'];
-$pro_name = $post['name'];
-$pro_price = $post['price'];
-$pro_gazou_name_old =$post['gazou_name_old'];
-$pro_gazou = $_FILES['gazou'];
+$test_year = $post['year'];
+$test_month = $post['month'];
+$test_day = $post['day'];
+$test_type =$post['test_type'];
+$test_date = $test_year . '-'. $test_month. '-'.$test_day;
 
-if($pro_name == ''){
-  print '商品名が入力されていません<br>';
+if($test_year == '' || $test_month == '' || $test_day == ''){
+  print '変更後のテスト実施日を正しく入力してください<br>';
 } ELSE{
-  print '商品名：' . $pro_name .'<br>';
+  print 'テスト実施日：'.$test_year. '年'.$test_month. '月'.$test_day.'日<br>';
 }
 
-if($pro_price == ''){
-  print '価格を入力してください<br>';
-} ELSE{
-  print '価格：'. $pro_price. '円';
+if($test_type == ''){
+  print 'テスト種別を選んでください<br>';
+} else{
+  print 'テスト種別：'.$test_type. '<br>';
 }
 
-if($pro_gazou['size'] >0){
-  if($pro_gazou['size'] > 1000000){
-    print '画像サイズが大きすぎます';
-  } else {
-    move_uploaded_file($pro_gazou['tmp_name'],'./gazou/'.$pro_gazou['name']);
-    print '<img src="./gazou/'.$pro_gazou['name'].'">';
-    print '<br>';
-  }
-}
 
-if($pro_name == '' || $pro_price == ''|| $pro_gazou['size'] > 1000000){
+if($test_year == '' || $test_month == ''|| $test_day == '' || $test_type == ''){
   print '<form>';
   print '<input type="button" onclick="history.back()" value="戻る">';
   print '</form>';
 } ELSE{
-  print '<form method="post" action="pro_edit_done.php">';
-  print '<input type="hidden" name="code" value="'.$pro_code.'">';
-  print '<input type="hidden" name="name" value="'.$pro_name.'">';
-  print '<input type="hidden" name="price" value="'.$pro_price.'">';
-  print '<input type="hidden" name="gazou_name_old" value="'.$pro_gazou_name_old.'">';
-  print '<input type="hidden" name="gazou_name" value="'.$pro_gazou['name'].'">';
+  print '<br>';
+  print '上の実施日・種別に変更してよろしいですか？';
+  print '<form method="post" action="test_time_edit_done.php">';
+  print '<input type="hidden" name="test_date" value="'.$test_date.'">';
+  print '<input type="hidden" name="test_type" value="'.$test_type.'">';
   print '<br>';
   print '<input type="button" onclick="history.back()" value="戻る">';
   print '<input type="submit" value="OK">';
