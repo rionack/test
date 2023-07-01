@@ -38,7 +38,7 @@ $password = 'root';
 $dbh = new PDO($dsn, $user, $password);
 $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$sql = 'SELECT student_code, name FROM students WHERE student_code=?;';
+$sql = 'SELECT student_code, name FROM students WHERE student_code=?';
 $stmt = $dbh->prepare($sql);
 $data[] = $student_code;
 $stmt->execute($data);
