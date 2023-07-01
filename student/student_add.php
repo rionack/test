@@ -22,7 +22,7 @@ if(isset($_SESSION['login']) == false){
 <br>
 <form method="post" action="student_add_check.php">
 学生番号を入れてください<br>
-<input type="text" name="student_code" style="width:100px">
+<input type="text" name="student_code" style="width:200px">
 <br>
 生徒名を入れてください<br>
 <input name="name" type="text" style="width:200px"><br>

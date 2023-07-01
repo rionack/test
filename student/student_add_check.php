@@ -3,11 +3,11 @@ session_start ();
 session_regenerate_id(true);
 if(isset($_SESSION['login']) == false){
   print 'ログインされていません';
-  print '<a href="../staff_login/staff_login.html">ログイン画面へ</a>';
+  print '<a href="../login_member/teacher_login.html">ログイン画面へ</a>';
   exit();
 } else{
-  print $_SESSION['staff_name'];
-  print 'さんがログイン中<br>';
+  print $_SESSION['teacher_name'];
+  print '先生がログイン中<br>';
 }
  ?>
 
@@ -15,40 +15,40 @@ if(isset($_SESSION['login']) == false){
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ろくまる農園</title>
+<title>成績管理アプリ</title>
 </head>
 <body>
 <?php
 require_once('../common/common.php');
 
 $post = sanitize($_POST);
-$staff_name = $post['name'];
-$staff_pass = $post['pass'];
-$staff_pass2 = $post['pass2'];
+$student_code = $post['student_code'];
+$name = $post['name'];
+$created_at = date('Y-m-d');
 
-if($staff_name == ''){
-  print 'スタッフ名が入力されていません<br>';
+if($student_code == ''){
+  print '学生番号が入力されていません<br>';
+} else{
+  print '学生番号：'. $student_code.'<br>';
+}
+
+//同じ学生番号でも入力されてしまうので、if(isset)とSELECTで後で解決
+
+if($name == ''){
+  print '生徒名が入力されていません<br>';
 } ELSE{
-  print 'スタッフ名：' . $staff_name .'<br>';
+  print '生徒名：' . $name .'<br>';
 }
 
-if($staff_pass == ''){
-  print 'パスワードを入力してください<br>';
-}
-
-if($staff_pass2 == ''){
-  print '確認のためパスワードを入力してください<br>';
-}
-
-if($staff_name == '' || $staff_pass == '' || $staff_pass2 == ''){
+if($student_code == '' || $name == '' ){
   print '<form>';
   print '<input type="button" onclick="history.back()" value="戻る">';
   print '</form>';
 } ELSE{
-  $staff_pass = md5($staff_pass);
-  print '<form method="post" action="staff_add_done.php">';
-  print '<input type="hidden" name="name" value="'.$staff_name.'">';
-  print '<input type="hidden" name="pass" value="'.$staff_pass.'">';
+  print '<form method="post" action="student_add_done.php">';
+  print '<input type="hidden" name="student_code" value="'.$student_code.'">';
+  print '<input type="hidden" name="name" value="'.$name.'">';
+  print '<input type="hidden" name="created_at" value="'.$created_at.'">';
   print '<br>';
   print '<input type="button" onclick="history.back()" value="戻る">';
   print '<input type="submit" value="OK">';

@@ -44,7 +44,7 @@ if(isset($_SESSION['login']) == false){
         break;
       }
     print '<input type="radio" name="student_id" value="'.$rec['id'].'">';
-    print $rec['student_code'];
+    print $rec['student_code'].'：';
     print $rec['name'];
     print '<br>';
     }
