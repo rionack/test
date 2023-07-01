@@ -27,7 +27,7 @@ if(isset($_SESSION['login']) == false){
     $dbh = new PDO($dsn, $user, $password);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = 'SELECT id, student_code, name FROM students WHERE 1';
+    $sql = 'SELECT id, student_code, name FROM students WHERE 1 ORDER BY student_code ASC';
     $stmt = $dbh->prepare($sql);
     $stmt->execute();
 
