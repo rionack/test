@@ -3,11 +3,11 @@ session_start ();
 session_regenerate_id(true);
 if(isset($_SESSION['login']) == false){
   print 'ログインされていません';
-  print '<a href="../login_member/teacher_login.html">ログイン画面へ</a>';
+  print '<a href="../staff_login/staff_login.html">ログイン画面へ</a>';
   exit();
 } else{
-  print $_SESSION['teacher_name'];
-  print '先生がログイン中<br>';
+  print $_SESSION['staff_name'];
+  print 'さんがログイン中<br>';
 }
  ?>
 
@@ -15,35 +15,40 @@ if(isset($_SESSION['login']) == false){
 <html>
 <head>
 <meta charset="UTF-8">
-<title>成績管理アプリ</title>
+<title>ろくまる農園</title>
 </head>
 <body>
 <?php
-try{
-  $test_id = $_POST['test_id'];
+require_once('../common/common.php');
 
-  $dsn = 'mysql:dbname=test;host=localhost;charset=utf8';
+try{
+  $post = sanitize($_POST);
+  $staff_name = $post['name'];
+  $staff_pass = $post['pass'];
+
+  $dsn = 'mysql:dbname=shop;host=localhost;charset=utf8';
   $user = 'root';
   $password ='root';
   $dbh = new PDO($dsn, $user, $password);
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-  $sql = 'DELETE FROM test_time WHERE id=?';
+  $sql = 'INSERT INTO mst_staff(name, password) VALUES(?,?)';
   $stmt = $dbh->prepare($sql);
-  $data[] = $test_id;
+  $data[] = $staff_name;
+  $data[] = $staff_pass;
   $stmt->execute($data);
 
   $dbh = null;
 
+  print $staff_name. 'さんを追加しました<br>';
 }
 catch(Exception $e){
   print 'ただいま障害が発生しており、ご迷惑をおかけします';
   exit();
 }
  ?>
-テスト情報を削除しました<br>
-<br>
-<a href="test_time_list.php">戻る</a>
+
+<a href="staff_list.php">戻る</a>
 
 </body>
 </html>
