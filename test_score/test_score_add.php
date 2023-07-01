@@ -33,7 +33,7 @@ if(isset($_SESSION['login']) == false){
   $dbh = new PDO($dsn, $user, $password);
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-  $sql = 'SELECT test_date, test_type FROM test_time;';
+  $sql = 'SELECT id, test_date, test_type FROM test_time;';
   $stmt = $dbh->prepare($sql);
   $stmt->execute();
 
@@ -42,10 +42,10 @@ if(isset($_SESSION['login']) == false){
   $dbh = null;
 ?>
 
-<select name="test_select">
-<?php foreach($rec as $row){
-  print '<option value="'.$row['test_date'].'">' .$row['test_date']. ' / '.$row['test_type'].'</option>';
-}; ?>
+<select name="test_select" style="width:200px">
+<?php foreach($rec as $row): ?>
+  <option value="<?php print $row['id']; ?>"><?php print $row['test_date'] . ' / ' . $row['test_type']; ?></option>
+<?php endforeach; ?>
 </select>
 
 <br>
