@@ -3,11 +3,11 @@ session_start ();
 session_regenerate_id(true);
 if(isset($_SESSION['login']) == false){
   print 'ログインされていません';
-  print '<a href="../staff_login/staff_login.html">ログイン画面へ</a>';
+  print '<a href="../login_member/teacher_login.html">ログイン画面へ</a>';
   exit();
 } else{
-  print $_SESSION['staff_name'];
-  print 'さんがログイン中<br>';
+  print $_SESSION['teacher_name'];
+  print '先生がログイン中<br>';
 }
  ?>
 
@@ -15,37 +15,30 @@ if(isset($_SESSION['login']) == false){
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ろくまる農園</title>
+<title>成績管理アプリ</title>
 </head>
 <body>
 <?php
 try{
 
-  $pro_code = $_GET['procode'];
+  $test_id = $_GET['testid'];
 
-  $dsn ='mysql:dbname=shop;host=localhost;charset=utf8';
+  $dsn ='mysql:dbname=test;host=localhost;charset=utf8';
   $user = 'root';
   $password = 'root';
   $dbh = new PDO($dsn, $user, $password);
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-  $sql = 'SELECT name, price, gazou FROM mst_product WHERE code=?';
+  $sql = 'SELECT test_date, test_type FROM test_time WHERE id=?';
   $stmt = $dbh->prepare($sql);
-  $data[] = $pro_code;
+  $data[] = $test_id;
   $stmt->execute($data);
 
   $rec = $stmt->fetch(PDO::FETCH_ASSOC);
-  $pro_name = $rec['name'];
-  $pro_price = $rec['price'];
-  $pro_gazou_name = $rec['gazou'];
+  $test_date = $rec['test_date'];
+  $test_type = $rec['test_type'];
 
   $dbh = null;
-
-   if($pro_gazou_name == ''){
-     $disp_gazou = '';
-   } else{
-     $disp_gazou = '<img src="./gazou/'.$pro_gazou_name.'">';
-   }
 
 }
 catch(Exeption $e){
@@ -54,22 +47,18 @@ catch(Exeption $e){
 }
  ?>
 
-商品削除<br>
+登録済みテスト情報を削除<br>
 <br>
-商品コード<br>
-<?php print $pro_code; ?>
+テスト実施日<br>
+<?php print $test_date; ?>
 <br>
-商品名<br>
-<?php print $pro_name; ?>
+テスト種別<br>
+<?php print $test_type; ?>
 <br>
-価格<br>
-<?php print $pro_price . '円<br>'; ?>
-<?php print $disp_gazou; ?>
 <br>
-この商品を削除してよろしいですか？<br><br>
-<form method="post" action="pro_delete_done.php">
-<input type="hidden" name="code" value="<?php print $pro_code; ?>">
-<input type="hidden" name="gazou_name" value="<?php print $pro_gaou_name; ?>">
+このテスト情報を削除してよろしいですか？<br><br>
+<form method="post" action="test_time_delete_done.php">
+<input type="hidden" name="test_id" value="<?php print $test_id; ?>">
 <input type="button" onclick="history.back()" value="戻る">
 <input type="submit" value="OK">
 </form>
