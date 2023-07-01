@@ -3,11 +3,11 @@ session_start ();
 session_regenerate_id(true);
 if(isset($_SESSION['login']) == false){
   print 'ログインされていません';
-  print '<a href="../staff_login/staff_login.html">ログイン画面へ</a>';
+  print '<a href="../login_member/teacher_login.html">ログイン画面へ</a>';
   exit();
 } else{
-  print $_SESSION['staff_name'];
-  print 'さんがログイン中<br>';
+  print $_SESSION['teacher_name'];
+  print '先生がログイン中<br>';
 }
  ?>
 
@@ -15,7 +15,7 @@ if(isset($_SESSION['login']) == false){
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ろくまる農園</title>
+<title>成績管理アプリ</title>
 </head>
 <body>
 <?php
@@ -24,23 +24,20 @@ require_once('../common/common.php');
 
 try{
   $post = sanitize($_POST);
-  $pro_code = $post['code'];
-  $pro_name = $post['name'];
-  $pro_price = $post['price'];
-  $pro_gazou_name_old = $post['gazou_name_old'];
-  $pro_gazou_name = $post['gazou_name'];
+  $test_id = post['test_id'];
+  $test_time = $post['test_time'];
+  $test_type = $post['test_type'];
 
-  $dsn = 'mysql:dbname=shop;host=localhost;charset=utf8';
+  $dsn = 'mysql:dbname=test;host=localhost;charset=utf8';
   $user = 'root';
   $password ='root';
   $dbh = new PDO($dsn, $user, $password);
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-  $sql = 'UPDATE mst_product SET name=?, price=?, gazou=? WHERE code=?';
+  $sql = 'UPDATE test_time SET test_date=?, test_type=? WHERE id=?';
   $stmt = $dbh->prepare($sql);
   $data[] = $pro_name;
   $data[] = $pro_price;
-  $data[] = $pro_gazou_name;
   $data[] = $pro_code;
   $stmt->execute($data);
 

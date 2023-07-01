@@ -23,6 +23,7 @@ if(isset($_SESSION['login']) == false){
 require_once('../common/common.php');
 
 $post = sanitize($_POST);
+$test_id = $post['test_id'];
 $test_year = $post['year'];
 $test_month = $post['month'];
 $test_day = $post['day'];
@@ -52,6 +53,7 @@ if($test_year == '' || $test_month == ''|| $test_day == '' || $test_type == ''){
   print '<form method="post" action="test_time_edit_done.php">';
   print '<input type="hidden" name="test_date" value="'.$test_date.'">';
   print '<input type="hidden" name="test_type" value="'.$test_type.'">';
+  print '<input type="hidden" name="test_id" value="'.$test_id.'">';
   print '<br>';
   print '<input type="button" onclick="history.back()" value="戻る">';
   print '<input type="submit" value="OK">';

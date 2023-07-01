@@ -70,6 +70,7 @@ catch(Exeption $e){
 <input type="radio" name="test_type" value="後期中間テスト">後期中間テスト<br>
 <input type="radio" name="test_type" value="後期期末テスト">後期期末テスト<br>
 <br>
+<input type="hidden" name="test_id" value="<?php print $test_id; ?>">
 <input type="button" onclick="history.back()" value="戻る">
 <input type="submit" value="OK">
 </form>
