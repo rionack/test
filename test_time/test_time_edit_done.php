@@ -24,8 +24,8 @@ require_once('../common/common.php');
 
 try{
   $post = sanitize($_POST);
-  $test_id = post['test_id'];
-  $test_time = $post['test_time'];
+  $test_id = $post['test_id'];
+  $test_date = $post['test_date'];
   $test_type = $post['test_type'];
 
   $dsn = 'mysql:dbname=test;host=localhost;charset=utf8';
@@ -36,16 +36,13 @@ try{
 
   $sql = 'UPDATE test_time SET test_date=?, test_type=? WHERE id=?';
   $stmt = $dbh->prepare($sql);
-  $data[] = $pro_name;
-  $data[] = $pro_price;
-  $data[] = $pro_code;
+  $data[] = $test_date;
+  $data[] = $test_type;
+  $data[] = $test_id;
   $stmt->execute($data);
 
   $dbh = null;
 
-  if ($pro_gazou_name_old != '' && file_exists('./gazou/'.$pro_gazou_name_old)) {
-     unlink('./gazou/'.$pro_gazou_name_old);
-   }
 }
 catch(Exception $e){
   print 'ただいま障害が発生しており、ご迷惑をおかけします';
@@ -53,9 +50,9 @@ catch(Exception $e){
 }
  ?>
 
-修正しました<br>
+テスト情報を修正しました<br>
 <br>
-<a href="pro_list.php">戻る</a>
+<a href="test_time_list.php">戻る</a>
 
 </body>
 </html>
