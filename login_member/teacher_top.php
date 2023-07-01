@@ -18,13 +18,15 @@ if(isset($_SESSION['login']) == false){
 <title>成績管理アプリ</title>
 </head>
 <body>
-<br>成績管理トップメニュー<br>
+<br>トップメニュー<br>
 <br>
 <a href="teacher_list.php">先生管理</a><br>
 <br>
 <a href="../test_time/test_time_list.php">テスト実施日管理</a><br>
 <br>
 <a href="../student/student_list.php">生徒管理</a><br>
+<br>
+<a href="../test_score/test_score_list.php">テスト点数管理</a><br>
 <br>
 <a href="../order/order_download.php">注文ダウンロード</a><br>
 <br>
