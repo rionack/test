@@ -3,11 +3,11 @@ session_start ();
 session_regenerate_id(true);
 if(isset($_SESSION['login']) == false){
   print 'ログインされていません';
-  print '<a href="../staff_login/staff_login.html">ログイン画面へ</a>';
+  print '<a href="../login_member/teacher_login.html">ログイン画面へ</a>';
   exit();
 } else{
-  print $_SESSION['staff_name'];
-  print 'さんがログイン中<br>';
+  print $_SESSION['teacher_name'];
+  print '先生がログイン中<br>';
 }
  ?>
 
@@ -15,27 +15,27 @@ if(isset($_SESSION['login']) == false){
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ろくまる農園</title>
+<title>成績管理アプリ</title>
 </head>
 <body>
 <?php
   try{
 
-    $dsn = 'mysql:dbname=shop;host=localhost;charset=utf8';
+    $dsn = 'mysql:dbname=test;host=localhost;charset=utf8';
     $user = 'root';
     $password = 'root';
     $dbh = new PDO($dsn, $user, $password);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = 'SELECT code, name FROM mst_staff WHERE 1';
+    $sql = 'SELECT id, student_code, name FROM students WHERE 1';
     $stmt = $dbh->prepare($sql);
     $stmt->execute();
 
     $dbh = null;
 
-    print 'スタッフ一覧<br><br>';
+    print '生徒一覧<br><br>';
 
-    print '<form method="post" action="staff_branch.php">';
+    print '<form method="post" action="student_branch.php">';
 
     while(true){
       $rec = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -43,7 +43,8 @@ if(isset($_SESSION['login']) == false){
       if($rec == false){
         break;
       }
-    print '<input type="radio" name="staffcode" value="'.$rec['code'].'">';
+    print '<input type="radio" name="student_id" value="'.$rec['id'].'">';
+    print $rec['student_code'];
     print $rec['name'];
     print '<br>';
     }
@@ -62,7 +63,7 @@ catch(Exception $e){
 }
  ?>
 <br>
-<a href="../staff_login/staff_top.php">トップメニューへ</a><br>
+<a href="../login_member/teacher_top.php">トップメニューへ</a><br>
 
 </body>
 </html>

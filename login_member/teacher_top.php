@@ -24,6 +24,8 @@ if(isset($_SESSION['login']) == false){
 <br>
 <a href="../test_time/test_time_list.php">テスト実施日管理</a><br>
 <br>
+<a href="../student/student_list.php">生徒管理</a><br>
+<br>
 <a href="../order/order_download.php">注文ダウンロード</a><br>
 <br>
 <a href="teacher_logout.php">ログアウト</a><br>

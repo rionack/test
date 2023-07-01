@@ -3,11 +3,11 @@ session_start ();
 session_regenerate_id(true);
 if(isset($_SESSION['login']) == false){
   print 'ログインされていません';
-  print '<a href="../staff_login/staff_login.html">ログイン画面へ</a>';
+  print '<a href="../login_member/teacher_login.html">ログイン画面へ</a>';
   exit();
 } else{
-  print $_SESSION['staff_name'];
-  print 'さんがログイン中<br>';
+  print $_SESSION['teacher_name'];
+  print '先生がログイン中<br>';
 }
  ?>
 
@@ -15,18 +15,17 @@ if(isset($_SESSION['login']) == false){
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ろくまる農園</title>
+<title>成績管理アプリ</title>
 </head>
 <body>
-スタッフ追加<br>
+生徒追加<br>
 <br>
-<form method="post" action="staff_add_check.php">
-スタッフ名を入れてください<br>
+<form method="post" action="student_add_check.php">
+学生番号を入れてください<br>
+<input type="text" name="student_code" style="width:100px">
+<br>
+生徒名を入れてください<br>
 <input name="name" type="text" style="width:200px"><br>
-パスワードを入力してください<br>
-<input name="pass" type="password" style="width:100px"><br>
-パスワードをもう一度入れてください<br>
-<input name="pass2" type="password" style="width:100px"><br>
 <br>
 <input type="button" onclick="history.back()" value="戻る">
 <input type="submit" value="OK">

@@ -3,45 +3,45 @@ session_start ();
 session_regenerate_id(true);
 if(isset($_SESSION['login']) == false){
   print 'ログインされていません';
-  print '<a href="../staff_login/staff_login.html">ログイン画面へ</a>';
+  print '<a href="../login_member/teacher_login.html">ログイン画面へ</a>';
   exit();
 }
 
 if(isset($_POST['disp']) == true){
-    if(isset($_POST['staffcode']) == false){
-      header('Location:staff_ng.php');
+    if(isset($_POST['student_id']) == false){
+      header('Location:student_ng.php');
       exit();
     }
 
-    $staff_code = $_POST['staffcode'];
-    header('Location:staff_disp.php?staffcode='.$staff_code);
+    $student_id = $_POST['student_id'];
+    header('Location:student_disp.php?student_id='.$student_id);
     exit();
 }
 
 if(isset($_POST['add']) == true){
-  header('Location:staff_add.php');
+  header('Location:student_add.php');
   exit();
 }
 
 if(isset($_POST['edit']) == true){
 
-    if(isset($_POST['staffcode']) == false){
-      header('Location:staff_ng.php');
+    if(isset($_POST['student_id']) == false){
+      header('Location:student_ng.php');
       exit();
     }
-  $staff_code = $_POST['staffcode'];
-  header('Location:staff_edit.php?staffcode='.$staff_code);
+  $student_id = $_POST['student_id'];
+  header('Location:student_edit.php?student_id='.$student_id);
   exit();
 }
 
 if(isset($_POST['delete']) == true){
 
-    if(isset($_POST['staffcode']) == false){
-      header('Location:staff_ng.php');
+    if(isset($_POST['student_id']) == false){
+      header('Location:student_ng.php');
       exit();
     }
-  $staff_code = $_POST['staffcode'];
-  header('Location:staff_delete.php?staffcode='.$staff_code);
+  $student_id = $_POST['student_id'];
+  header('Location:student_delete.php?student_id='.$student_id);
   exit();
 }
 
