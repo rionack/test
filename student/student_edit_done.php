@@ -3,11 +3,11 @@ session_start ();
 session_regenerate_id(true);
 if(isset($_SESSION['login']) == false){
   print 'ログインされていません';
-  print '<a href="../staff_login/staff_login.html">ログイン画面へ</a>';
+  print '<a href="../login_member/teacher_login.html">ログイン画面へ</a>';
   exit();
 } else{
-  print $_SESSION['staff_name'];
-  print 'さんがログイン中<br>';
+  print $_SESSION['teacher_name'];
+  print '先生がログイン中<br>';
 }
  ?>
 
@@ -15,7 +15,7 @@ if(isset($_SESSION['login']) == false){
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ろくまる農園</title>
+<title>成績管理アプリ</title>
 </head>
 <body>
 <?php
@@ -23,21 +23,21 @@ require_once('../common/common.php');
 
 try{
   $post = sanitize($_POST);
-  $staff_code = $post['code'];
-  $staff_name = $post['name'];
-  $staff_pass = $post['pass'];
+  $student_id = $post['student_id'];
+  $student_code = $post['student_code'];
+  $student_name = $post['student_name'];
 
-  $dsn = 'mysql:dbname=shop;host=localhost;charset=utf8';
+  $dsn = 'mysql:dbname=test;host=localhost;charset=utf8';
   $user = 'root';
   $password ='root';
   $dbh = new PDO($dsn, $user, $password);
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-  $sql = 'UPDATE mst_staff SET name=?, password=? WHERE code=?';
+  $sql = 'UPDATE students SET student_code=?, name=? WHERE id=?';
   $stmt = $dbh->prepare($sql);
-  $data[] = $staff_name;
-  $data[] = $staff_pass;
-  $data[] = $staff_code;
+  $data[] = $student_code;
+  $data[] = $student_name;
+  $data[] = $student_id;
   $stmt->execute($data);
 
   $dbh = null;
@@ -49,7 +49,7 @@ catch(Exception $e){
  ?>
 修正しました<br>
 <br>
-<a href="staff_list.php">戻る</a>
+<a href="student_list.php">戻る</a>
 
 </body>
 </html>

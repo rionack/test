@@ -46,8 +46,8 @@ if($student_code == '' || $student_name == ''){
 } ELSE{
   print '<form method="post" action="student_edit_done.php">';
   print '<input type="hidden" name="student_id" value="'.$student_id.'">';
-  print '<input type="hidden" name="code" value="'.$student_code.'">';
-  print '<input type="hidden" name="name" value="'.$student_name.'">';
+  print '<input type="hidden" name="student_code" value="'.$student_code.'">';
+  print '<input type="hidden" name="student_name" value="'.$student_name.'">';
   print '<br>';
   print '<input type="button" onclick="history.back()" value="戻る">';
   print '<input type="submit" value="OK">';
