@@ -3,11 +3,11 @@ session_start ();
 session_regenerate_id(true);
 if(isset($_SESSION['login']) == false){
   print 'ログインされていません';
-  print '<a href="../staff_login/staff_login.html">ログイン画面へ</a>';
+  print '<a href="../login_member/teacher_login.html">ログイン画面へ</a>';
   exit();
 } else{
-  print $_SESSION['staff_name'];
-  print 'さんがログイン中<br>';
+  print $_SESSION['teacher_name'];
+  print '先生がログイン中<br>';
 }
  ?>
 
@@ -15,27 +15,28 @@ if(isset($_SESSION['login']) == false){
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ろくまる農園</title>
+<title>成績管理アプリ</title>
 </head>
 <body>
 <?php
 try{
 
-  $staff_code = $_GET['staffcode'];
+  $student_id = $_GET['student_id'];
 
-  $dsn ='mysql:dbname=shop;host=localhost;charset=utf8';
+  $dsn ='mysql:dbname=test;host=localhost;charset=utf8';
   $user = 'root';
   $password = 'root';
   $dbh = new PDO($dsn, $user, $password);
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-  $sql = 'SELECT name FROM mst_staff WHERE code=?';
+  $sql = 'SELECT student_code, name FROM students WHERE id=?';
   $stmt = $dbh->prepare($sql);
-  $data[] = $staff_code;
+  $data[] = $student_id;
   $stmt->execute($data);
 
   $rec = $stmt->fetch(PDO::FETCH_ASSOC);
-  $staff_name = $rec['name'];
+  $student_code = $rec['student_code'];
+  $student_name = $rec['name'];
 
   $dbh = null;
 }
@@ -45,20 +46,25 @@ catch(Exeption $e){
 }
  ?>
 
-スタッフ修正<br>
+生徒情報修正<br>
 <br>
-スタッフコード<br>
-<?php print $staff_code; ?>
+学生番号<br>
+<?php print $student_code; ?>
 <br>
+生徒名<br>
+<?php print $student_name; ?>
 <br>
-<form method="post" action="staff_edit_check.php">
-<input type="hidden" name="code" value="<?php print $staff_code; ?>">
-スタッフ名<br>
-<input type="text" name="name" style="width:200px" value="<?php print $staff_name; ?>"><br>
-パスワードを入力してください<br>
-<input type="password" name="pass" style="width:100px"><br>
-もう一度パスワードを入力していください<br>
-<input type="password" name="pass2" style="width:100px"><br>
+<form method="post" action="student_edit_check.php">
+<br>
+以下に修正する情報を入力してください<br>
+<br>
+<input type="hidden" name="student_id" value="<?php print $student_id; ?>">
+学生番号<br>
+<input type="text" name="student_code" style="width:200px" value="<?php print $student_code; ?>"><br>
+<br>
+生徒名<br>
+<input type="text" name="student_name" style="width:200px" value="<?php print $student_name; ?>"><br>
+
 <br>
 <input type="button" onclick="history.back()" value="戻る">
 <input type="submit" value="OK">
