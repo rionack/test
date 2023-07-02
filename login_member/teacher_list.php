@@ -63,7 +63,7 @@ catch(Exception $e){
 }
  ?>
 <br>
-<a href="teacher_top.php">成績管理トップ画面へ</a><br>
+<a href="teacher_top.php">トップメニューへ</a><br>
 
 </body>
 </html>
