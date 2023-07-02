@@ -21,11 +21,31 @@ if(isset($_SESSION['login']) == false){
 テストの点数を追加<br>
 <br>
 <form method="post" action="test_score_add_check.php">
-学生番号を入れてください<br>
-<input name="student_code" type="text" style="width:200px"><br>
+  学生番号を選んでください<br>
+  <select name="student_code" style="width:200px">
+  <?php
+    $dsn = 'mysql:dbname=test;host=localhost;charset=utf8';
+    $user = 'root';
+    $password = 'root';
+    $dbh = new PDO($dsn, $user, $password);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $sql = 'SELECT student_code, name FROM students;';
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute();
+
+    $rec = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach($rec as $row) {
+      print '<option value="' . $row['student_code'] . '">' . $row['student_code'] .' / '.$row['name']. '</option>';
+    }
+
+    $dbh = null;
+  ?>
+  </select>
 <br>
 テスト実施日を選んでください<br>
-
+<select name="test_select" style="width:200px">
 <?php
   $dsn ='mysql:dbname=test;host=localhost;charset=utf8';
   $user = 'root';
@@ -40,12 +60,10 @@ if(isset($_SESSION['login']) == false){
   $rec = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
   $dbh = null;
-?>
 
-<select name="test_select" style="width:200px">
-<?php foreach($rec as $row): ?>
-  <option value="<?php print $row['id']; ?>"><?php print $row['test_date'] . ' / ' . $row['test_type']; ?></option>
-<?php endforeach; ?>
+  foreach($rec as $row) {
+    print '<option value="' .$row['id']. '">' .$row['test_date'] . ' / ' . $row['test_type']. '</option>';
+} ?>
 </select>
 
 <br>

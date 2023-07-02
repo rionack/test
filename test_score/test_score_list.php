@@ -27,7 +27,11 @@ if(isset($_SESSION['login']) == false){
     $dbh = new PDO($dsn, $user, $password);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = 'SELECT id,student_code, test_id, koku, suu, sya, ri, ei FROM test_score WHERE 1';
+    $sql = 'SELECT ts.id, ts.student_code, ts.koku, ts.suu, ts.sya, ts.ri, ts.ei, s.name, t.test_date, t.test_type
+            FROM test_score ts
+            LEFT JOIN students s ON ts.student_code = s.student_code
+            LEFT JOIN test_time t ON ts.test_id = t.id
+            ORDER BY ts.student_code ASC';
     $stmt = $dbh->prepare($sql);
     $stmt->execute();
 
@@ -44,8 +48,16 @@ if(isset($_SESSION['login']) == false){
         break;
       }
     print '<input type="radio" name="test_score_id" value="'.$rec['id'].'">';
-    print $rec['name'].'--';
-    print $rec['price'].'円';
+    print '学生番号：'.$rec['student_code']. '/';
+    print '生徒名：'.$rec['name']. '/';
+    print 'テスト実施日：'.$rec['test_date']. '/';
+    print 'テスト種別：'.$rec['test_type']. '/';
+    print '国語：'.$rec['koku'].'点/';
+    print '数学：'.$rec['suu'].'点/';
+    print '社会：'.$rec['sya'].'点/';
+    print '理科：'.$rec['ri'].'点/';
+    print '英語：'.$rec['ei'].'点/';
+    print '合計：'.($rec['koku']+$rec['suu']+$rec['sya']+$rec['ri']+$rec['ei']). '点';
     print '<br>';
     }
     print '<br>';

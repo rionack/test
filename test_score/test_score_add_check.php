@@ -32,32 +32,45 @@ $score_ri = $post['ri'];
 $score_ei = $post['ei'];
 $created_at = date('Y-m-d');
 
-$dsn ='mysql:dbname=test;host=localhost;charset=utf8';
-$user = 'root';
-$password = 'root';
-$dbh = new PDO($dsn, $user, $password);
-$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$sql = 'SELECT student_code, name FROM students WHERE student_code=?';
-$stmt = $dbh->prepare($sql);
-$data[] = $student_code;
-$stmt->execute($data);
-$rec = $stmt->fetch(PDO::FETCH_ASSOC);
-$dbh = null;
-
-if(preg_match('/\A[0-9]+\z/',$student_code) == 0){
-	print '学生番号は半角数字で入力してください。<br>';
-}
-if($rec === false){
+if($student_code == ''){
   print '入力された学生番号が存在しません<br>';
 }else {
+
+  $dsn ='mysql:dbname=test;host=localhost;charset=utf8';
+  $user = 'root';
+  $password = 'root';
+  $dbh = new PDO($dsn, $user, $password);
+  $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+  $sql = 'SELECT name FROM students WHERE student_code=?';
+  $stmt = $dbh->prepare($sql);
+  $data[] = $student_code;
+  $stmt->execute($data);
+  $rec = $stmt->fetch(PDO::FETCH_ASSOC);
+  $dbh = null;
+
 	print '学生番号：'. $student_code. ' / 生徒名：'.$rec['name']. '<br>';
 }
 
-if(isset($test_id) == false){
+if($test_id == ''){
   print '実施テストを選んでください';
 }else{
-  print 'テスト種別'.$test_id.'<br>';
+
+  $dsn ='mysql:dbname=test;host=localhost;charset=utf8';
+  $user = 'root';
+  $password = 'root';
+  $dbh = new PDO($dsn, $user, $password);
+  $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+  $sql = 'SELECT test_date, test_type FROM test_time WHERE id=?';
+  $stmt = $dbh->prepare($sql);
+  $data2[] = $test_id;
+  $stmt->execute($data2);
+  $rec = $stmt->fetch(PDO::FETCH_ASSOC);
+  $dbh = null;
+
+  print 'テスト実施日：'.$rec['test_date']. ' /テスト種別：' .$rec['test_type']. '<br>';
 }
 
 if($score_koku == ''|| $score_koku <0 || $score_koku >100){
@@ -90,13 +103,31 @@ if($score_ei == '' || $score_ei <0 || $score_ei >100){
   print '英語：'.$score_ei. '点<br>';
 }
 
-if(preg_match('/\A[0-9]+\z/',$student_code) == 0 ||
-isset($test_id) == false ||
+$dsn ='mysql:dbname=test;host=localhost;charset=utf8';
+$user = 'root';
+$password = 'root';
+$dbh = new PDO($dsn, $user, $password);
+$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+$sql = 'SELECT test_id FROM test_score WHERE student_code=?';
+$stmt = $dbh->prepare($sql);
+$data3[] = $student_code;
+$stmt->execute($data3);
+$rec = $stmt->fetch(PDO::FETCH_ASSOC);
+$dbh = null;
+
+if($test_id == $rec['test_id']){
+    print 'すでにデータがあります。修正画面から点数の修正を行ってください。<br>';
+}
+
+if($student_code == '' || $test_id == '' ||
 $score_koku == ''|| $score_koku <0 || $score_koku >100 ||
 $score_suu == '' || $score_suu <0 || $score_suu >100 ||
 $score_sya == '' || $score_sya <0 || $score_sya >100 ||
 $score_ri == '' || $score_ri <0 || $score_ri >100 ||
-$score_ei == '' || $score_ei <0 || $score_ei >100){
+$score_ei == '' || $score_ei <0 || $score_ei >100 ||
+$test_id == $rec['test_id'])
+{
 	print '<form>';
 	print '<input type="button" onclick="history.back()" value="戻る">';
 	print '</form>';
