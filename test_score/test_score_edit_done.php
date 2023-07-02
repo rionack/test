@@ -3,11 +3,11 @@ session_start ();
 session_regenerate_id(true);
 if(isset($_SESSION['login']) == false){
   print 'ログインされていません';
-  print '<a href="../staff_login/staff_login.html">ログイン画面へ</a>';
+  print '<a href="../login_member/teacher_login.html">ログイン画面へ</a>';
   exit();
 } else{
-  print $_SESSION['staff_name'];
-  print 'さんがログイン中<br>';
+  print $_SESSION['teacher_name'];
+  print '先生がログイン中<br>';
 }
  ?>
 
@@ -15,7 +15,7 @@ if(isset($_SESSION['login']) == false){
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ろくまる農園</title>
+<title>成績管理アプリ</title>
 </head>
 <body>
 <?php
@@ -24,31 +24,30 @@ require_once('../common/common.php');
 
 try{
   $post = sanitize($_POST);
-  $pro_code = $post['code'];
-  $pro_name = $post['name'];
-  $pro_price = $post['price'];
-  $pro_gazou_name_old = $post['gazou_name_old'];
-  $pro_gazou_name = $post['gazou_name'];
+  $test_score_id = $post['test_score_id'];
+  $koku = $post['koku'];
+  $suu = $post['suu'];
+  $sya = $post['sya'];
+  $ri = $post['ri'];
+  $ei = $post['ei'];
 
-  $dsn = 'mysql:dbname=shop;host=localhost;charset=utf8';
+  $dsn = 'mysql:dbname=test;host=localhost;charset=utf8';
   $user = 'root';
   $password ='root';
   $dbh = new PDO($dsn, $user, $password);
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-  $sql = 'UPDATE mst_product SET name=?, price=?, gazou=? WHERE code=?';
+  $sql = 'UPDATE test_score SET koku=?, suu=?, sya=?, ri=?, ei=? WHERE id=?';
   $stmt = $dbh->prepare($sql);
-  $data[] = $pro_name;
-  $data[] = $pro_price;
-  $data[] = $pro_gazou_name;
-  $data[] = $pro_code;
+  $data[] = $koku;
+  $data[] = $suu;
+  $data[] = $sya;
+  $data[] = $ri;
+  $data[] = $ei;
+  $data[] = $test_score_id;
   $stmt->execute($data);
 
   $dbh = null;
-
-  if ($pro_gazou_name_old != '' && file_exists('./gazou/'.$pro_gazou_name_old)) {
-     unlink('./gazou/'.$pro_gazou_name_old);
-   }
 }
 catch(Exception $e){
   print 'ただいま障害が発生しており、ご迷惑をおかけします';
@@ -56,9 +55,9 @@ catch(Exception $e){
 }
  ?>
 
-修正しました<br>
+点数を修正しました<br>
 <br>
-<a href="pro_list.php">戻る</a>
+<a href="test_score_list.php">戻る</a>
 
 </body>
 </html>
