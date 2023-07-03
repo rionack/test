@@ -117,7 +117,7 @@ $rec = $stmt->fetch(PDO::FETCH_ASSOC);
 $dbh = null;
 
 if($test_id == $rec['test_id']){
-    print 'すでにデータがあります。修正画面から点数の修正を行ってください。<br>';
+    print 'すでに登録されているデータがあります。修正画面から点数の修正を行ってください。<br>';
 }
 
 if($student_code == '' || $test_id == '' ||
