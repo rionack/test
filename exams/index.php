@@ -3,7 +3,7 @@ session_start ();
 session_regenerate_id(true);
 if(isset($_SESSION['login']) == false){
   print 'ログインされていません';
-  print '<a href="teacher_login.html">ログイン画面へ</a>';
+  print '<a href="login_member/teacher_login.html">ログイン画面へ</a>';
   exit();
 } else{
   print $_SESSION['teacher_name'];
@@ -27,34 +27,16 @@ if(isset($_SESSION['login']) == false){
     $dbh = new PDO($dsn, $user, $password);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = 'SELECT id, name, email FROM login_member WHERE 1';
+    $sql = 'SELECT ts.id, ts.student_code, ts.koku, ts.suu, ts.sya, ts.ri, ts.ei, s.name, t.test_date, t.test_type
+            FROM test_score ts
+            LEFT JOIN students s ON ts.student_code = s.student_code
+            LEFT JOIN test_time t ON ts.test_id = t.id';
     $stmt = $dbh->prepare($sql);
     $stmt->execute();
 
     $dbh = null;
 
-    print '登録済み先生一覧<br><br>';
-
-    print '<form method="post" action="teacher_branch.php">';
-
-    while(true){
-      $rec = $stmt->fetch(PDO::FETCH_ASSOC);
-
-      if($rec == false){
-        break;
-      }
-    print '<input type="radio" name="teachercode" value="'.$rec['id'].'">';
-    print $rec['name']. '先生　：';
-    print $rec['email'];
-    print '<br>';
-    }
-    print '<br>';
-    print '<input type="submit" name="disp" value="参照">';
-    print '<input type="submit" name="add" value="追加">';
-    print '<input type="submit" name="edit" value="修正">';
-    print '<input type="submit" name="delete" value="削除">';
-    print '</form>';
-
+    print 'テスト結果一覧<br><br>';
 
 }
 catch(Exception $e){
@@ -62,8 +44,47 @@ catch(Exception $e){
       exit();
 }
  ?>
+
+<table  border="1" style="border-collapse:collapse">
+  <tr>
+    <td>学生番号</td>
+    <td>名前</td>
+    <td>英語</td>
+    <td>数学</td>
+    <td>国語</td>
+    <td>社会</td>
+    <td>理科</td>
+    <td>合計</td>
+  </tr>
+  <?php
+  while(true){
+    $rec = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if($rec == false){
+      break;
+    }
+
+    $total = $rec['ei']+$rec['suu']+$rec['koku']+$rec['sya']+$rec['ri'];
+
+    print '<tr>';
+    print '<td>'.$rec['student_code']. '</td>';
+    print '<td>'.$rec['name']. '</td>';
+    print '<td>'.$rec['ei']. '</td>';
+    print '<td>'.$rec['suu']. '</td>';
+    print '<td>'.$rec['koku']. '</td>';
+    print '<td>'.$rec['sya']. '</td>';
+    print '<td>'.$rec['ri']. '</td>';
+    print '<td>'.$total. '</td>';
+    print '</tr>';
+
+  }
+
+   ?>
+
+</table>
+
 <br>
-<a href="teacher_top.php">トップメニューへ</a><br>
+<a href="../login_member/teacher_top.php">トップメニューへ</a><br>
 
 </body>
 </html>
