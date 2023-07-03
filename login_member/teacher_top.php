@@ -28,6 +28,8 @@ if(isset($_SESSION['login']) == false){
 <br>
 <a href="../test_score/test_score_list.php">テスト点数管理</a><br>
 <br>
+<a href="../exams/index.php">テスト結果一覧</a><br>
+<br>
 <a href="../order/order_download.php">注文ダウンロード</a><br>
 <br>
 <a href="teacher_logout.php">ログアウト</a><br>
