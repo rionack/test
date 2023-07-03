@@ -45,7 +45,7 @@ catch(Exception $e){
     $test_id = $test['id'];
     $test_type = $test['test_type'];
     $test_date = $test['test_date'];
-    $link = 'result.php?test_id=$test_id';
+    $link = 'result.php?test_id='.$test_id;
     print '<a href='. $link.'">'. $test_type. '　(テスト実施日：'.$test_date.')</a><br>';
   }
 

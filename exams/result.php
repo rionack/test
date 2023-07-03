@@ -21,6 +21,8 @@ if(isset($_SESSION['login']) == false){
 <?php
   try{
 
+    $test_id = $_GET['test_id'];
+
     $dsn = 'mysql:dbname=test;host=localhost;charset=utf8';
     $user = 'root';
     $password = 'root';
@@ -30,13 +32,14 @@ if(isset($_SESSION['login']) == false){
     $sql = 'SELECT ts.id, ts.student_code, ts.koku, ts.suu, ts.sya, ts.ri, ts.ei, s.name, t.test_date, t.test_type
             FROM test_score ts
             LEFT JOIN students s ON ts.student_code = s.student_code
-            LEFT JOIN test_time t ON ts.test_id = t.id';
+            LEFT JOIN test_time t ON ts.test_id = t.id
+            WHERE t.id=?';
     $stmt = $dbh->prepare($sql);
-    $stmt->execute();
+    $data[] = $test_id;
+    $stmt->execute($data);
+    $rec = $stmt->fetch(PDO::FETCH_ASSOC);
 
     $dbh = null;
-
-    print 'テスト結果一覧<br><br>';
 
 }
 catch(Exception $e){
@@ -44,6 +47,8 @@ catch(Exception $e){
       exit();
 }
  ?>
+
+<?php print $rec['test_type']. '（実施日：'. $rec['test_date']. '）結果一覧'; ?>
 
 <table  border="1" style="border-collapse:collapse">
   <tr>
@@ -57,23 +62,37 @@ catch(Exception $e){
     <td>合計</td>
   </tr>
   <?php
-  while(true){
-    $rec = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if($rec == false){
-      break;
-    }
+  $dsn = 'mysql:dbname=test;host=localhost;charset=utf8';
+  $user = 'root';
+  $password = 'root';
+  $dbh = new PDO($dsn, $user, $password);
+  $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $total = $rec['ei']+$rec['suu']+$rec['koku']+$rec['sya']+$rec['ri'];
+  $sql = 'SELECT ts.id, ts.student_code, ts.koku, ts.suu, ts.sya, ts.ri, ts.ei, s.name, t.test_date, t.test_type
+          FROM test_score ts
+          LEFT JOIN students s ON ts.student_code = s.student_code
+          LEFT JOIN test_time t ON ts.test_id = t.id
+          WHERE t.id=?';
+  $stmt = $dbh->prepare($sql);
+  $data2[] = $test_id;
+  $stmt->execute($data2);
+  $tests = $stmt->fetchALL(PDO::FETCH_ASSOC);
+
+  $dbh = null;
+
+  foreach($tests as $test){
+
+    $total = $test['ei']+$test['suu']+$test['koku']+$test['sya']+$test['ri'];
 
     print '<tr>';
-    print '<td>'.$rec['student_code']. '</td>';
-    print '<td>'.$rec['name']. '</td>';
-    print '<td>'.$rec['ei']. '</td>';
-    print '<td>'.$rec['suu']. '</td>';
-    print '<td>'.$rec['koku']. '</td>';
-    print '<td>'.$rec['sya']. '</td>';
-    print '<td>'.$rec['ri']. '</td>';
+    print '<td>'.$test['student_code']. '</td>';
+    print '<td>'.$test['name']. '</td>';
+    print '<td>'.$test['ei']. '</td>';
+    print '<td>'.$test['suu']. '</td>';
+    print '<td>'.$test['koku']. '</td>';
+    print '<td>'.$test['sya']. '</td>';
+    print '<td>'.$test['ri']. '</td>';
     print '<td>'.$total. '</td>';
     print '</tr>';
 
@@ -84,7 +103,7 @@ catch(Exception $e){
 </table>
 
 <br>
-<a href="../login_member/teacher_top.php">トップメニューへ</a><br>
+<a href="./index.php">テスト結果一覧へ</a><br>
 
 </body>
 </html>
