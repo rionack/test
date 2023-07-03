@@ -27,59 +27,29 @@ if(isset($_SESSION['login']) == false){
     $dbh = new PDO($dsn, $user, $password);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = 'SELECT ts.id, ts.student_code, ts.koku, ts.suu, ts.sya, ts.ri, ts.ei, s.name, t.test_date, t.test_type
-            FROM test_score ts
-            LEFT JOIN students s ON ts.student_code = s.student_code
-            LEFT JOIN test_time t ON ts.test_id = t.id';
+    $sql = 'SELECT * FROM test_time';
     $stmt = $dbh->prepare($sql);
     $stmt->execute();
+    $rec = $stmt->fetchALL(PDO::FETCH_ASSOC);
 
     $dbh = null;
-
-    print 'テスト結果一覧<br><br>';
 
 }
 catch(Exception $e){
       print 'ただいま障害による大変ご迷惑をおかけします';
       exit();
 }
- ?>
+  print 'テスト結果一覧<br><br>';
 
-<table  border="1" style="border-collapse:collapse">
-  <tr>
-    <td>学生番号</td>
-    <td>名前</td>
-    <td>英語</td>
-    <td>数学</td>
-    <td>国語</td>
-    <td>社会</td>
-    <td>理科</td>
-    <td>合計</td>
-  </tr>
-  <?php
-  while(true){
-    $rec = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if($rec == false){
-      break;
-    }
-
-    $total = $rec['ei']+$rec['suu']+$rec['koku']+$rec['sya']+$rec['ri'];
-
-    print '<tr>';
-    print '<td>'.$rec['student_code']. '</td>';
-    print '<td>'.$rec['name']. '</td>';
-    print '<td>'.$rec['ei']. '</td>';
-    print '<td>'.$rec['suu']. '</td>';
-    print '<td>'.$rec['koku']. '</td>';
-    print '<td>'.$rec['sya']. '</td>';
-    print '<td>'.$rec['ri']. '</td>';
-    print '<td>'.$total. '</td>';
-    print '</tr>';
-
+  foreach($rec as $test){
+    $test_id = $test['id'];
+    $test_type = $test['test_type'];
+    $test_date = $test['test_date'];
+    $link = 'result.php?test_id=$test_id';
+    print '<a href='. $link.'">'. $test_type. '　(テスト実施日：'.$test_date.')</a><br>';
   }
 
-   ?>
+ ?>
 
 </table>
 
