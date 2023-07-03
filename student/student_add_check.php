@@ -26,8 +26,25 @@ $student_code = $post['student_code'];
 $name = $post['name'];
 $created_at = date('Y-m-d');
 
+$dsn ='mysql:dbname=test;host=localhost;charset=utf8';
+$user = 'root';
+$password = 'root';
+$dbh = new PDO($dsn, $user, $password);
+$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+$sql = 'SELECT name FROM students WHERE student_code=?';
+$stmt = $dbh->prepare($sql);
+$data[] = $student_code;
+$stmt->execute($data);
+$rec = $stmt->fetch(PDO::FETCH_ASSOC);
+$dbh = null;
+
+
 if($student_code == ''){
   print '学生番号が入力されていません<br>';
+}
+ if(isset($rec['name']) == true){
+  print '学生番号が重複しているため登録できません<br>';
 } else{
   print '学生番号：'. $student_code.'<br>';
 }
@@ -40,7 +57,7 @@ if($name == ''){
   print '生徒名：' . $name .'<br>';
 }
 
-if($student_code == '' || $name == '' ){
+if(isset($rec['name']) == true || $student_code == '' || $name == '' ){
   print '<form>';
   print '<input type="button" onclick="history.back()" value="戻る">';
   print '</form>';
