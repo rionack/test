@@ -52,7 +52,7 @@ catch(Exception $e){
 
 <table  border="1" style="border-collapse:collapse">
   <tr>
-    <td>学生番号</td>
+    <td>学生番号▼</td>
     <td>名前</td>
     <td>英語</td>
     <td>数学</td>
