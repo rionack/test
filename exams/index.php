@@ -53,6 +53,63 @@ catch(Exception $e){
 
 </table>
 
+<?php
+  $test_id2 = $_GET['test_id2'];
+
+  $dsn = 'mysql:dbname=test;host=localhost;charset=utf8';
+  $user = 'root';
+  $password = 'root';
+  $dbh = new PDO($dsn, $user, $password);
+  $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+  $sql = 'SELECT ts.id, ts.student_code, ts.koku, ts.suu, ts.sya, ts.ri, ts.ei, s.name, t.test_date, t.test_type
+          FROM test_score ts
+          LEFT JOIN students s ON ts.student_code = s.student_code
+          LEFT JOIN test_time t ON ts.test_id = t.id
+          WHERE t.id=?';
+  $stmt = $dbh->prepare($sql);
+  $data2[] = $test_id2;
+  $stmt->execute($data2);
+  $tests = $stmt->fetchALL(PDO::FETCH_ASSOC);
+
+  $dbh = null;
+
+  ?>
+
+<table  border="1" style="border-collapse:collapse">
+  <tr>
+    <td>学生番号</td>
+    <td>名前</td>
+    <td>英語</td>
+    <td>数学</td>
+    <td>国語</td>
+    <td>社会</td>
+    <td>理科</td>
+    <td>合計</td>
+  </tr>
+  <?php
+
+
+
+  foreach($tests as $test){
+
+    $total = $test['ei']+$test['suu']+$test['koku']+$test['sya']+$test['ri'];
+
+    print '<tr>';
+    print '<td>'.$test['student_code']. '</td>';
+    print '<td>'.$test['name']. '</td>';
+    print '<td>'.$test['ei']. '</td>';
+    print '<td>'.$test['suu']. '</td>';
+    print '<td>'.$test['koku']. '</td>';
+    print '<td>'.$test['sya']. '</td>';
+    print '<td>'.$test['ri']. '</td>';
+    print '<td>'.$total. '</td>';
+    print '</tr>';
+
+  }
+
+   ?>
+
 <br>
 <a href="../login_member/teacher_top.php">トップメニューへ</a><br>
 
