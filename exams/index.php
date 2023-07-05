@@ -50,10 +50,16 @@ catch(Exception $e){
   }
 
  ?>
+<br>
+<a href="../login_member/teacher_top.php">トップメニューへ</a><br>
 
 </table>
 
 <?php
+  if(isset($_GET['test_id2']) == false){
+    exit();
+  } else{
+
   $test_id2 = $_GET['test_id2'];
 
   $dsn = 'mysql:dbname=test;host=localhost;charset=utf8';
@@ -75,7 +81,6 @@ catch(Exception $e){
   $dbh = null;
 
   ?>
-
 <table  border="1" style="border-collapse:collapse">
   <tr>
     <td>学生番号</td>
@@ -87,10 +92,8 @@ catch(Exception $e){
     <td>理科</td>
     <td>合計</td>
   </tr>
+
   <?php
-
-
-
   foreach($tests as $test){
 
     $total = $test['ei']+$test['suu']+$test['koku']+$test['sya']+$test['ri'];
@@ -107,11 +110,13 @@ catch(Exception $e){
     print '</tr>';
 
   }
-
+}
    ?>
+</table>
 
 <br>
-<a href="../login_member/teacher_top.php">トップメニューへ</a><br>
+<br>
+
 
 </body>
 </html>
