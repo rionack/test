@@ -18,6 +18,9 @@ if(isset($_SESSION['login']) == false){
 <?php
 
     $test_id = $_GET['test_id'];
+    $orderByStudent = $_GET['student_order'];
+    $orderByName = $_GET['name_order'];
+    $orderByEi = $_GET['ei_order'];
 
     $dsn = 'mysql:dbname=test;host=localhost;charset=utf8';
     $user = 'root';
@@ -37,7 +40,7 @@ if(isset($_SESSION['login']) == false){
 
     $dbh = null;
 
-    header('Location:index.php?test_id2='.$test_id);
+    header('Location:index.php?test_id2='.$test_id.'&student_order='.$orderByStudent.'&name_order='.$orderByName. '&ei_order='.$orderByEi);
 
  ?>
 
