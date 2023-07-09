@@ -116,8 +116,10 @@ $stmt->execute($data3);
 $rec = $stmt->fetch(PDO::FETCH_ASSOC);
 $dbh = null;
 
-if($test_id == $rec['test_id']){
-    print 'すでに登録されているデータがあります。修正画面から点数の修正を行ってください。<br>';
+if(isset($test_id) && isset($rec['test_id'])){
+  if($test_id == $rec['test_id']){
+      print 'すでに登録されているデータがあります。修正画面から点数の修正を行ってください。<br>';
+  }
 }
 
 if($student_code == '' || $test_id == '' ||
@@ -126,7 +128,7 @@ $score_suu == '' || $score_suu <0 || $score_suu >100 ||
 $score_sya == '' || $score_sya <0 || $score_sya >100 ||
 $score_ri == '' || $score_ri <0 || $score_ri >100 ||
 $score_ei == '' || $score_ei <0 || $score_ei >100 ||
-$test_id == $rec['test_id'])
+(isset($test_id) && isset($rec['test_id']) && $test_id == $rec['test_id']))
 {
 	print '<form>';
 	print '<input type="button" onclick="history.back()" value="戻る">';
