@@ -30,7 +30,7 @@ if(isset($_SESSION['login']) == false){
 <br>
 <a href="../exams/index.php">テスト結果一覧</a><br>
 <br>
-<a href="../order/order_download.php">注文ダウンロード</a><br>
+<a href="../exams/download.php">CSVダウンロード</a><br>
 <br>
 <a href="teacher_logout.php">ログアウト</a><br>
 

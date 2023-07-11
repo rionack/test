@@ -67,7 +67,7 @@ foreach ($rec as $test) {
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
-  $sql = 'SELECT ts.id, ts.student_code, ts.koku, ts.suu, ts.sya, ts.ri, ts.ei, s.name, t.test_date, t.test_type
+  $sql = 'SELECT ts.id, ts.student_code, ts.koku, ts.suu, ts.sya, ts.ri, ts.ei, s.name, t.test_date, t.test_type, (ts.koku + ts.suu + ts.sya + ts.ri + ts.ei)AS total
           FROM test_score ts
           LEFT JOIN students s ON ts.student_code = s.student_code
           LEFT JOIN test_time t ON ts.test_id = t.id
@@ -92,11 +92,21 @@ foreach ($rec as $test) {
     <td>
       英語<a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.ei&sort_rule=ASC">▽</a><a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.ei&sort_rule=DESC">△</a>
     </td>
-    <td>数学</td>
-    <td>国語</td>
-    <td>社会</td>
-    <td>理科</td>
-    <td>合計</td>
+    <td>
+      数学<a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.suu&sort_rule=ASC">▽</a><a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.suu&sort_rule=DESC">△</a>
+    </td>
+    <td>
+      国語<a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.koku&sort_rule=ASC">▽</a><a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.koku&sort_rule=DESC">△</a>
+    </td>
+    <td>
+      社会<a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.sya&sort_rule=ASC">▽</a><a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.sya&sort_rule=DESC">△</a>
+    </td>
+    <td>
+      理科<a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.ri&sort_rule=ASC">▽</a><a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.ri&sort_rule=DESC">△</a>
+    </td>
+    <td>
+      合計<a href="result.php?test_id=<?php print $test_id2; ?>&order_by=total&sort_rule=ASC">▽</a><a href="result.php?test_id=<?php print $test_id2; ?>&order_by=total&sort_rule=DESC">△</a>
+    </td>
   </tr>
 
   <?php
