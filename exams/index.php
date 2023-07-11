@@ -44,7 +44,7 @@ foreach ($rec as $test) {
   $test_id = $test['id'];
   $test_type = $test['test_type'];
   $test_date = $test['test_date'];
-  $link = 'result.php?test_id=' . $test_id;
+  $link = 'result.php?test_id=' . $test_id.'&order_by=ts.student_code&sort_rule=ASC';
   print '<a href="' . $link . '">' . $test_type . '　(テスト実施日：' . $test_date . ')</a><br>';
 }
 ?>
@@ -52,11 +52,13 @@ foreach ($rec as $test) {
 <a href="../login_member/teacher_top.php">トップメニューへ</a><br>
 
 <?php
-  if(!isset($_GET['test_id2'])){
+  if (!isset($_GET['test_id2']) || !isset($_GET['order_by']) || !isset($_GET['sort_rule'])) {
     exit();
   }
 
   $test_id2 = $_GET['test_id2'];
+  $order_by = $_GET['order_by'];
+  $sort_rule = $_GET['sort_rule'];
 
   $dsn = 'mysql:dbname=test;host=localhost;charset=utf8';
   $user = 'root';
@@ -69,10 +71,12 @@ foreach ($rec as $test) {
           FROM test_score ts
           LEFT JOIN students s ON ts.student_code = s.student_code
           LEFT JOIN test_time t ON ts.test_id = t.id
-          WHERE t.id=?';
+          WHERE t.id=?
+          ORDER BY '.$order_by.' '.$sort_rule;
 
   $stmt = $dbh->prepare($sql);
-  $stmt->execute([$test_id2]);
+  $data[] = $test_id2;
+  $stmt->execute($data);
   $tests = $stmt->fetchALL(PDO::FETCH_ASSOC);
   $dbh = null;
 
@@ -80,13 +84,13 @@ foreach ($rec as $test) {
 <table border="1" style="border-collapse: collapse">
   <tr>
     <td>
-      学生番号
+      学生番号<a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.student_code&sort_rule=ASC">▽</a><a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.student_code&sort_rule=DESC">△</a>
     </td>
     <td>
-      名前
+      名前<a href="result.php?test_id=<?php print $test_id2; ?>&order_by=s.name&sort_rule=ASC">▽</a><a href="result.php?test_id=<?php print $test_id2; ?>&order_by=s.name&sort_rule=DESC">△</a>
     </td>
     <td>
-      英語
+      英語<a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.ei&sort_rule=ASC">▽</a><a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.ei&sort_rule=DESC">△</a>
     </td>
     <td>数学</td>
     <td>国語</td>
@@ -100,7 +104,7 @@ foreach ($rec as $test) {
     $total = $test['ei'] + $test['suu'] + $test['koku'] + $test['sya'] + $test['ri'];
 
     print '<tr>';
-    print '<td>' . $test['student_code'] . '</td>';
+    print '<td>' . $test['student_code'].'</td>';
     print '<td>' . $test['name'] . '</td>';
     print '<td>' . $test['ei'] . '</td>';
     print '<td>' . $test['suu'] . '</td>';
