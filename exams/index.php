@@ -90,22 +90,22 @@ foreach ($rec as $test) {
       名前<a href="result.php?test_id=<?php print $test_id2; ?>&order_by=s.name&sort_rule=ASC">▽</a><a href="result.php?test_id=<?php print $test_id2; ?>&order_by=s.name&sort_rule=DESC">△</a>
     </td>
     <td>
-      英語<a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.ei&sort_rule=ASC">▽</a><a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.ei&sort_rule=DESC">△</a>
+      英語<a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.ei&sort_rule=DESC">▽</a><a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.ei&sort_rule=ASC">△</a>
     </td>
     <td>
-      数学<a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.suu&sort_rule=ASC">▽</a><a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.suu&sort_rule=DESC">△</a>
+      数学<a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.suu&sort_rule=DESC">▽</a><a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.suu&sort_rule=ASC">△</a>
     </td>
     <td>
-      国語<a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.koku&sort_rule=ASC">▽</a><a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.koku&sort_rule=DESC">△</a>
+      国語<a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.koku&sort_rule=DESC">▽</a><a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.koku&sort_rule=ASC">△</a>
     </td>
     <td>
-      社会<a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.sya&sort_rule=ASC">▽</a><a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.sya&sort_rule=DESC">△</a>
+      社会<a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.sya&sort_rule=DESC">▽</a><a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.sya&sort_rule=ASC">△</a>
     </td>
     <td>
-      理科<a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.ri&sort_rule=ASC">▽</a><a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.ri&sort_rule=DESC">△</a>
+      理科<a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.ri&sort_rule=DESC">▽</a><a href="result.php?test_id=<?php print $test_id2; ?>&order_by=ts.ri&sort_rule=ASC">△</a>
     </td>
     <td>
-      合計<a href="result.php?test_id=<?php print $test_id2; ?>&order_by=total&sort_rule=ASC">▽</a><a href="result.php?test_id=<?php print $test_id2; ?>&order_by=total&sort_rule=DESC">△</a>
+      合計<a href="result.php?test_id=<?php print $test_id2; ?>&order_by=total&sort_rule=DESC">▽</a><a href="result.php?test_id=<?php print $test_id2; ?>&order_by=total&sort_rule=ASC">△</a>
     </td>
   </tr>
 
